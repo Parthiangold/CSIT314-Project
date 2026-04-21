@@ -1,0 +1,24 @@
+# Virtual environments
+.venv/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Flask
+instance/
+.webassets-cache
