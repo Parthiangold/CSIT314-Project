@@ -2,7 +2,7 @@ Talent Matching System: Sourcecode File Structure:
 
 
 * app: the main backend package
-  * models: the OOP DATA Models 
+  * models: the OOP data Models 
   * routes: Our API Endpoints 
   * services: Business Logic 
   * utils: helpers 
