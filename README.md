@@ -1,0 +1,1 @@
+This is the backend sourcecode for the Talent matching system using flask to create an API.
