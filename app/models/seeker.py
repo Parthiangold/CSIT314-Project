@@ -13,17 +13,17 @@ class Seeker(db.Model):
         nullable=False
     )
 
-    education = db.column(db.String(255))
+    education = db.Column(db.String(255))
 
-    major = db.column(db.String(255))
+    major = db.Column(db.String(255))
 
-    fieldOfStudy = db.column(db.String(255))
+    fieldOfStudy = db.Column(db.String(255))
 
-    yearsOfExperience = db.column(db.Integer)
+    yearsOfExperience = db.Column(db.Integer)
 
-    preferredWorkMode = db.column(db.String(20))
+    preferredWorkMode = db.Column(db.String(20))
 
-    preferredLocation = db.column(db.String(100))
+    preferredLocation = db.Column(db.String(100))
 
     # Relationships
 
