@@ -2,7 +2,7 @@ from app.extensions import db
 from app.models.skills import seekerSkills
 
 class Seeker(db.Model):
-    __tablename__ = "seeker"
+    __tablename__ = "seeker_profiles"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -33,7 +33,7 @@ class Seeker(db.Model):
     )
     skills = db.relationship(
         "seekerSkills",
-        secondary="seeker_skills",
+        secondary="seekerSkills",
         backref="seeker",
 
     )
