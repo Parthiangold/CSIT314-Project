@@ -9,8 +9,8 @@ class User(db.Model):
     # id is the primary key for this table
     id = db.Column(db.Integer, primary_key=True)
 
-    # creates a column populated with the actual name of the Users and doesn't accept null values.
-    fullName = db.Column(
+    # creates a column populated with the usernames of the users and doesn't accept null values.
+    userName = db.Column(
         db.String(255),
         nullable=False
     )
@@ -48,12 +48,12 @@ class User(db.Model):
     #uselist=False means that there can only be one of these relationships
     seekerProfile = db.relationship(
         "SeekerProfile",
-        backref="user",
+        back_populates="user",
         uselist=False
     )
 
     employerProfile = db.relationship(
         "EmployerProfile",
-        backref="user",
+        back_populates="user",
         uselist=False
     )
