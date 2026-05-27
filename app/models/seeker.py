@@ -1,7 +1,7 @@
 from app.extensions import db
 from app.models.skills import seekerSkills
 
-class Seeker(db.Model):
+class SeekerProfile(db.Model):
     __tablename__ = "seekerProfiles"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -10,6 +10,11 @@ class Seeker(db.Model):
         db.Integer,
         db.ForeignKey('users.id'),
         unique=True,
+        nullable=False
+    )
+
+    fullName = db.Column(
+        db.String(255),
         nullable=False
     )
 
@@ -33,13 +38,19 @@ class Seeker(db.Model):
     )
     skills = db.relationship(
         "seekerSkills",
-        secondary="seekerSkills",
+        secondary=seekerSkills,
         backref="seeker",
 
     )
 
     workExperiences = db.relationship(
         "WorkExperience",
+        back_populates="seeker",
+        cascade="all, delete-orphan"
+    )
+
+    jobApplications = db.relationship(
+        "JobApplication",
         back_populates="seeker",
         cascade="all, delete-orphan"
     )
