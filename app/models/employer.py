@@ -28,6 +28,6 @@ class EmployerProfile(db.Model):
 
     jobPosting = db.relationship(
         "Job",
-        back_populates="employer",
+        back_populates="employerProfile",
         cascade="all, delete-orphan"
     )
