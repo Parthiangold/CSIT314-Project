@@ -1,8 +1,4 @@
-from argon2 import PasswordHasher, verify_password
 from flask import Blueprint, request, jsonify, make_response
-
-from app.models.user import User
-from app.extensions import db
 from app.services import auth_service
 
 authBp = Blueprint('auth', __name__, url_prefix='/api/auth')
