@@ -16,9 +16,9 @@ def filterJobs(
         if keywords and not matchesKeywords(
             keywords,
             [
-                job.title,
+                job.jobTitle,
                 job.companyInformation,
-                job.description,
+                job.jobDescription,
                 job.requiredEducation,
                 job.jobLocation,
                 job.workMode,
