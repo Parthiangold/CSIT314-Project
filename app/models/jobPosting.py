@@ -28,7 +28,7 @@ class JobPosting(db.Model):
 
     yearsOfExperience = db.Column(db.Integer)
 
-    WorkMode = db.Column(db.String(20))
+    workMode = db.Column(db.String(20))
 
     jobLocation = db.Column(db.String(100))
 
@@ -38,10 +38,10 @@ class JobPosting(db.Model):
         back_populates="jobPostings"
     )
 
-    jobSkills = db.relationship(
-        "jobSkills",
+    skills = db.relationship(
+        "Skill",
         secondary=jobSkills,
-        backref="jobPosting"
+        back_populates="jobPostings"
     )
 
     applications = db.relationship(

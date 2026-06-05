@@ -8,7 +8,7 @@ class WorkExperience(db.Model):
 
     seekerId = db.Column(
         db.Integer,
-        db.ForeignKey('seeker_profiles.id'),
+        db.ForeignKey('seekerProfiles.id'),
         nullable=False
     )
 
