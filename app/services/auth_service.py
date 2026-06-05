@@ -1,7 +1,7 @@
 from io import StringIO
 
 from argon2 import PasswordHasher, verify_password
-from argon2.exceptions import VerifyMismatchError
+from argon2.exceptions import InvalidHashError, VerifyMismatchError
 
 from app.models import SeekerProfile, EmployerProfile
 from app.models.user import User
@@ -23,6 +23,19 @@ def registerUser(email: str, username: str, password: str, role: str):
             "message": "Password is required"
         }
 
+    if not username:
+        return {
+            "success": False,
+            "message": "Username is required"
+        }
+
+    normalizedRole = role.lower() if role else ""
+    if normalizedRole not in ("candidate", "employer"):
+        return {
+            "success": False,
+            "message": "Role must be candidate or employer"
+        }
+
     passwordHash = ph.hash(password)
 
     existingUser = User.query.filter_by(
@@ -37,22 +50,24 @@ def registerUser(email: str, username: str, password: str, role: str):
 
     newUser = User(
         email=email,
-        username=username,
+        userName=username,
         passwordHash=passwordHash,
-        role=role,
-        hasMembership=False
+        userType=normalizedRole,
+        isMember=False
     )
 
-    if role == "SEEKER":
+    if normalizedRole == "candidate":
         seeker = SeekerProfile(
-            user=newUser
+            user=newUser,
+            fullName=username
         )
         db.session.add(seeker)
 
-    elif role == "EMPLOYER":
+    elif normalizedRole == "employer":
 
         employer = EmployerProfile(
-            user=newUser
+            user=newUser,
+            companyName=username
         )
         db.session.add(employer)
 
@@ -62,10 +77,24 @@ def registerUser(email: str, username: str, password: str, role: str):
     return {
         "success": True,
         "message": "User created successfully",
-        "userId": newUser.id
+        "userId": newUser.id,
+        "role": newUser.userType,
+        "isMember": newUser.isMember
     }
 
 def login(email: str, password: str):
+
+    if not email:
+        return {
+            "success": False,
+            "message": "Email is required"
+        }
+
+    if not password:
+        return {
+            "success": False,
+            "message": "Password is required"
+        }
 
     user = User.query.filter_by(email=email).first()
 
@@ -76,9 +105,9 @@ def login(email: str, password: str):
         }
 
     try:
-        ph.verify(password, user.passwordHash)
+        ph.verify(user.passwordHash, password)
 
-    except VerifyMismatchError:
+    except (InvalidHashError, VerifyMismatchError):
         return {
             "success": False,
             "message": "Invalid password"
@@ -87,5 +116,7 @@ def login(email: str, password: str):
         "success": True,
         "message": "Login successful",
         "userId": user.id,
-        "hasMembership": user.hasMembership,
+        "username": user.userName,
+        "role": user.userType,
+        "isMember": user.isMember,
     }
