@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify
 from app.services import auth_service
 
 authBp = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -6,11 +6,11 @@ authBp = Blueprint('auth', __name__, url_prefix='/api/auth')
 @authBp.route('/register', methods=['POST'])
 def register():
 
-   data = request.get_json()
+   data = request.get_json(silent=True) or {}
 
    result = auth_service.registerUser(
        email=data.get('email'),
-       username=data.get('username'),
+       username=data.get('username') or data.get('name'),
        password=data.get('password'),
        role=data.get('role')
    )
@@ -22,7 +22,7 @@ def register():
 @authBp.route('/login', methods=['POST'])
 def login():
 
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     result = auth_service.login(
         email=data.get('email'),

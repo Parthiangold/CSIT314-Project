@@ -30,7 +30,7 @@ class User(db.Model):
 
     pNumber = db.Column(
         db.String(255),
-        nullable=False
+        nullable=True
     )
 
     userType = db.Column(

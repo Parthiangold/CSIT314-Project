@@ -46,3 +46,15 @@ class Skill(db.Model):
         db.String(100),
         unique=True,
         nullable=False)
+
+    seekers = db.relationship(
+        "SeekerProfile",
+        secondary=seekerSkills,
+        back_populates="skills"
+    )
+
+    jobPostings = db.relationship(
+        "JobPosting",
+        secondary=jobSkills,
+        back_populates="skills"
+    )

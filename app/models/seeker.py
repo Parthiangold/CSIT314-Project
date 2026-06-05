@@ -15,7 +15,7 @@ class SeekerProfile(db.Model):
 
     fullName = db.Column(
         db.String(255),
-        nullable=False
+        nullable=True
     )
 
     education = db.Column(db.String(255))
@@ -37,9 +37,9 @@ class SeekerProfile(db.Model):
         back_populates="seekerProfile"
     )
     skills = db.relationship(
-        "seekerSkills",
+        "Skill",
         secondary=seekerSkills,
-        backref="seeker",
+        back_populates="seekers",
 
     )
 

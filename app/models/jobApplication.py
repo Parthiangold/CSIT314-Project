@@ -7,7 +7,7 @@ class JobApplication(db.Model):
     __tablename__ = "jobApplications"
 
     # Unique Constraint to ensure that a user cannot apply for the same job twice
-    __tabl_args__ = (
+    __table_args__ = (
         db.UniqueConstraint(
             "seekerId",
             "jobPostingId",
@@ -22,14 +22,14 @@ class JobApplication(db.Model):
     # FK to the SeekerProfile object
     seekerId = db.Column(
         db.Integer,
-        db.ForeignKey("SeekerProfiles.id"),
+        db.ForeignKey("seekerProfiles.id"),
         nullable=False
     )
 
     # FK to the JobPosting object
     jobPostingId = db.Column(
         db.Integer,
-        db.ForeignKey("JobPostings.id"),
+        db.ForeignKey("jobPostings.id"),
         nullable=False
     )
 
@@ -56,5 +56,5 @@ class JobApplication(db.Model):
 
     jobPosting = db.relationship(
         "JobPosting",
-        back_populates="jobApplications"
+        back_populates="applications"
     )
